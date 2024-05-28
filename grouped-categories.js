@@ -170,7 +170,7 @@ export default function (HC) {
 		};
 	}
 
-	function truncateText(text, maxWidth) {
+	function truncateText(axis, text, maxWidth) {
 		let truncated = text;
 		const svgText = axis.chart.renderer.text(text, 0, 0).css({ visibility: 'hidden' }).add();
 		while (svgText.getBBox().width > maxWidth && truncated.length > 0) {
@@ -453,7 +453,7 @@ export default function (HC) {
 
 			if(actualLabelWidth > availableWidth) {
 				tick.label.attr({
-					text: truncateText(category.name, availableWidth),
+					text: truncateText(axis,category.name, availableWidth),
 					title: category.name
 				});
 			}
