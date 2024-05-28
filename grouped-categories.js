@@ -170,6 +170,19 @@ export default function (HC) {
 		};
 	}
 
+	function truncateText(text, maxWidth) {
+		let truncated = text;
+		const svgText = axis.chart.renderer.text(text, 0, 0).css({ visibility: 'hidden' }).add();
+		while (svgText.getBBox().width > maxWidth && truncated.length > 0) {
+				truncated = truncated.slice(0, -1);
+				svgText.attr({
+						text: truncated + '...'
+				});
+		}
+		svgText.destroy();
+		return truncated + '...';
+	}
+
 	//
 	// Axis prototype
 	//
@@ -430,26 +443,13 @@ export default function (HC) {
 				isFirst: tick.isFirst,
 				isLast: tick.isLast,
 				value: category.name,
-				pos: tick.pos,
+				pos: tick.pos
 			}));
 
 			const labelCount = axis.categories.length;
 			const chartWidth = axis.chart.chartWidth;
 			const availableWidth = (chartWidth / labelCount) - 30;
 			const actualLabelWidth = tick.label.getBBox().width;
-
-			function truncateText(text, maxWidth) {
-				let truncated = text;
-				const svgText = axis.chart.renderer.text(text, 0, 0).css({ visibility: 'hidden' }).add();
-				while (svgText.getBBox().width > maxWidth && truncated.length > 0) {
-						truncated = truncated.slice(0, -1);
-						svgText.attr({
-								text: truncated + '...'
-						});
-				}
-				svgText.destroy();
-				return truncated + '...';
-			}
 
 			if(actualLabelWidth > availableWidth) {
 				tick.label.attr({
@@ -510,7 +510,7 @@ export default function (HC) {
 					const labelCount = this.axis.categories.length;
 					const chartWidth = chart.chartWidth;
 					const availableWidth = (chartWidth / labelCount) - 40;
-					const leaves = category.leaves; // todo robin check 3 depth case
+					const leaves = category.leaves;
 					const maxLabelWidth = leaves * (availableWidth);
 					const actualLabelWidth = label.getBBox().width;
 
