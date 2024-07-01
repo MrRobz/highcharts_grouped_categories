@@ -592,7 +592,7 @@ export default function (HC) {
 		// render grid for "normal" categories (first-level), render left grid line only for the first category
     if (isFirst) {
       gridAttrs = horiz
-        ? [axis.left, start + size, axis.left, xy.y + axis.groupSize(true)]
+        ? [axis.left, start, axis.left, xy.y + axis.groupSize(true)]
         : axis.isXAxis
         ? [xy.x, axis.top, xy.x + axis.groupSize(true), axis.top]
         : [xy.x, axis.top + axis.len, xy.x + axis.groupSize(true), axis.top + axis.len];
@@ -646,7 +646,7 @@ export default function (HC) {
 
 				if (grid) {
 					if (horiz && axis.left < maxPos.x) {
-						addGridPart(grid, [maxPos.x - reverseCrisp, size, maxPos.x - reverseCrisp, size + lvlSize], tickWidth);
+						addGridPart(grid, [maxPos.x - reverseCrisp, size-lvlSize + group.labelOffsets.y, maxPos.x - reverseCrisp, size + lvlSize], tickWidth);
 					} else if (!horiz && axis.top <= maxPos.y) {
 						addGridPart(grid, [size, maxPos.y + reverseCrisp, size + lvlSize, maxPos.y + reverseCrisp], tickWidth);
 					}
